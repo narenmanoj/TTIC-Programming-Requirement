@@ -43,20 +43,26 @@ def test_trie():
     assert len(tt) == len(all_convos_set)
     print("I have %d phrases saved now" % len(tt))
     print("large tests cleared")
-    util.save_object(tt, "autocomplete_state.pkl")
-
-# assumign you ran test_trie before
+    util.save_object(tt, "test_autocomplete_state.pkl")
 
 
 def test_predictions():
-    tt = util.load_object("autocomplete_state.pkl")
+    # assuming you ran test_trie before
+    tt = util.load_object("test_autocomplete_state.pkl")
     print("I have %d phrases saved now" % len(tt))
     assert tt.__contains__("have", check_end=False)
-    print(tt.get_top_k_subphrases("sorry"))
+    print(tt.get_top_k_subphrases("when w"))
+
+
+def test_autocomplete():
+    ac = autocomplete.Autocomplete(
+        filename_pkl="autocomplete_state.pkl", load=True)
+    print(ac.generate_completions("this"))
 
 
 if __name__ == "__main__":
-    test_trie()
-    test_predictions()
+    # test_trie()
+    # test_predictions()
+    test_autocomplete()
     print("trie tests passed!")
     # print(AutocompleteModel("data/sample_conversations.json"))

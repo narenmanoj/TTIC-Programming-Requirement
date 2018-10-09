@@ -101,5 +101,24 @@ class Trie:
 
 
 class Autocomplete:
-    def __init__(filename):
-        data = util.read_input(filename)
+    def __init__(self, filename_data="data/sample_conversations.json", filename_pkl="autocomplete_state.pkl", load=False):
+        if load:
+            self.load_from_file(filename_pkl)
+            return
+        self.tt = Trie()
+        data = util.read_input(filename_data)
+        all_convos_set = set()
+        for line, count in util.get_customer_service_phrases(data).items():
+            for i in range(count):
+                all_convos_set.add(line)
+                self.tt.add(line)
+        util.save_object(self.tt, filename_pkl)
+
+    def load_from_file(self, filename):
+        self.tt = util.load_object(filename)
+        assert isinstance(self.tt, Trie)
+
+    def generate_completions(self, phrase):
+        results_from_trie = self.tt.get_top_k_subphrases(phrase)
+        results = [phrase + r[0][1:] for r in results_from_trie]
+        return results
