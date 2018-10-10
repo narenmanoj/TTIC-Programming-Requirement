@@ -119,6 +119,6 @@ class Autocomplete:
         assert isinstance(self.tt, Trie)
 
     def generate_completions(self, phrase):
-        results_from_trie = self.tt.get_top_k_subphrases(phrase)
+        results_from_trie = self.tt.get_top_k_subphrases(phrase.lower())
         results = [phrase + r[0][1:] for r in results_from_trie]
         return results
