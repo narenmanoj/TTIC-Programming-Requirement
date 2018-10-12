@@ -27,7 +27,7 @@ To run all tests, please call python3 autocomplete_tests.py. To start the web se
 
 Follow-up questions
 -------------------
-- _How would you evaluate your autocomplete server? If you made another version, how would you compare the two to decide which is better?_
+_How would you evaluate your autocomplete server? If you made another version, how would you compare the two to decide which is better?_
 
 Broadly, there are a few categories under which the autocomplete server should be evaluated. In no particular order:
 
@@ -36,16 +36,16 @@ Broadly, there are a few categories under which the autocomplete server should b
 - Complexity of model updates. If the model never changes, then this is not an issue. However, if the corpus is growing or if certain phrases are used with decreasing frequency over time, then one may have to recreate the model periodically. This can become cumbersome as the update frequency increases and as the model becomes increasingly difficult to recreate or update. 
 - Interpretability of the model. All else equal, one prefers a model whose predictions are easier to understand and explain. 
 
-- _One way to improve the autocomplete server is to give topic-specific suggestions. How would you design an auto-categorization server? It should take a list of messages and return a TopicId. (Assume that every conversation in the training set has a TopicId)._
+_One way to improve the autocomplete server is to give topic-specific suggestions. How would you design an auto-categorization server? It should take a list of messages and return a TopicId. (Assume that every conversation in the training set has a TopicId)._
 
 There are a couple ideas I have:
   - For each TopicID, construct a list of the most frequently used (nontrivial) words occurring in each discussion involving the TopicID. This can be done in some offline preprocessing step. Then, for each query, rank candidate TopicIDs by keyword presence in the query. Return the full sentences occurring in the topmost TopicIDs.
   -  
 
-- _How would you evaluate if your auto-categorization server is good?_
+_How would you evaluate if your auto-categorization server is good?_
 
 Similar to the first question, there are a few criteria to evaluate (unless stated otherwise, we can use the same methodology to evaluate the criterion as stated in the first question):
     - Speed of predictions.
     - Quality of predictions. This can be evaluated less subjectively than the autocomplete 
 
-- _Processing hundreds of millions of conversations for your autocomplete and auto-categorize models could take a very long time. How could you distribute the processing across multiple machines?_
+_Processing hundreds of millions of conversations for your autocomplete and auto-categorize models could take a very long time. How could you distribute the processing across multiple machines?_
