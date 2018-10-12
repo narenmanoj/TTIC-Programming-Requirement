@@ -22,7 +22,17 @@ Here's all the files I used in my project.
 
 Running
 -------
-To run all tests, please call python3 autocomplete_tests.py. To start the web server, please call python3 autocomplete_server.py. To obtain text completions while the web server is running, please call curl http://localhost:8080/autocomplete?q=< your_query_here > 
+To run all tests:
+
+    -python3 autocomplete_tests.py. 
+
+To start the web server:
+
+    -python3 autocomplete_server.py
+
+To obtain text completions while the web server is running: 
+
+    -curl http://localhost:8080/autocomplete?q=< your_query_here > 
 
 
 Follow-up questions
