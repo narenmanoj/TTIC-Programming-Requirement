@@ -44,7 +44,7 @@ _How would you evaluate your autocomplete server? If you made another version, h
 Broadly, there are a few categories under which the autocomplete server should be evaluated. In no particular order:
 
 - Speed of predictions. Measuring this is easy - sample from some realistic distribution of queries, hit the server with these queries, and measure the average response time.
-- Quality of predictions. This is somewhat more subjective. One way to measure this is to have users rate the suggested completions; the server with the highest ratings wins. This is also useful if one wants to refine the ranking methodology. 
+- Quality of predictions. This is somewhat more subjective. One way to measure this is to have users rate the suggested completions; the server with the highest ratings wins. This is also useful if one wants to refine the ranking methodology. Another way to measure this is to consider every phrase prefix in the dataset (or in some held-out test set, which can be constructed by splitting the provided dataset into a training/test sets) and check how many suffixes are correctly predicted. 
 - Complexity of model updates. If the model never changes, then this is not an issue. However, if the corpus is growing or if certain phrases are used with decreasing frequency over time, then one may have to recreate the model periodically. This can become cumbersome as the update frequency increases and as the model becomes increasingly difficult to recreate or update. 
 - Interpretability of the model. All else equal, one prefers a model whose predictions are easier to understand and explain. 
 
@@ -52,8 +52,8 @@ _One way to improve the autocomplete server is to give topic-specific suggestion
 
 There are a couple ideas I have:
 
-  - For each TopicID, construct a list of the most frequently used (nontrivial) words occurring in each discussion involving the TopicID. This can be done in some offline preprocessing step. Then, for each query, rank candidate TopicIDs by keyword presence in the query. Return the full sentences occurring in the topmost TopicIDs.
-  -  
+  - For each TopicID, construct a list of the most frequently used (nontrivial) words occurring in each discussion involving the TopicID. This can be done in some offline preprocessing step. Then, for each query, rank candidate TopicIDs by keyword presence in the query (for a fixed query, which TopicID is most well-represented in terms of keyword presence in the query?). Return the topmost TopicID (or a ranking of the TopicIDs). This is an easily interpretable and straightforward solution; however, it might be too naive to be universally useful.
+  - 
 
 _How would you evaluate if your auto-categorization server is good?_
 
@@ -61,5 +61,7 @@ Similar to the first question, there are a few criteria to evaluate (unless stat
 
 - Speed of predictions.
 - Quality of predictions. This can be evaluated less subjectively than the autocomplete 
+- Complexity of model updates.
+- Interpretability of the model. 
 
 _Processing hundreds of millions of conversations for your autocomplete and auto-categorize models could take a very long time. How could you distribute the processing across multiple machines?_
