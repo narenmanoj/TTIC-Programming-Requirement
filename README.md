@@ -50,18 +50,21 @@ Broadly, there are a few categories under which the autocomplete server should b
 
 _One way to improve the autocomplete server is to give topic-specific suggestions. How would you design an auto-categorization server? It should take a list of messages and return a TopicId. (Assume that every conversation in the training set has a TopicId)._
 
-There are a couple ideas I have:
+For each TopicID, we can construct a list of the most frequently used (nontrivial) words occurring in each discussion involving the TopicID. This can be done in some offline preprocessing step. Then, for each query, we can rank candidate TopicIDs by keyword presence in the query (for a fixed query, which TopicID is most well-represented in terms of keyword presence in the query?). We then return the topmost TopicID (or a ranking of the TopicIDs). This is an easily interpretable and straightforward solution; however, it might be too naive to be universally useful. 
 
-  - For each TopicID, construct a list of the most frequently used (nontrivial) words occurring in each discussion involving the TopicID. This can be done in some offline preprocessing step. Then, for each query, rank candidate TopicIDs by keyword presence in the query (for a fixed query, which TopicID is most well-represented in terms of keyword presence in the query?). Return the topmost TopicID (or a ranking of the TopicIDs). This is an easily interpretable and straightforward solution; however, it might be too naive to be universally useful.
-  - 
+For our solution, we therefore require some dictionary of trivial words so that we can appropriately filter these out when constructing the keyword set to TopicID mappings. Once our preprocessing is complete, we can construct a map mapping keywords to TopicIDs that they appear in. Upon receiving a query, we iterate over the words in the query and compute some histogram of TopicIDs, where the frequencies come from our map. We then sort the histogram by frequency and return the most frequently seen TopicIDs. 
 
 _How would you evaluate if your auto-categorization server is good?_
 
-Similar to the first question, there are a few criteria to evaluate (unless stated otherwise, we can use the same methodology to evaluate the criterion as stated in the first question):
+Similar to the first question, there are a few criteria to evaluate. We can use the same methodology to evaluate the criterion as stated in the first question:
 
 - Speed of predictions.
-- Quality of predictions. This can be evaluated less subjectively than the autocomplete 
+- Quality of predictions.  
 - Complexity of model updates.
 - Interpretability of the model. 
 
 _Processing hundreds of millions of conversations for your autocomplete and auto-categorize models could take a very long time. How could you distribute the processing across multiple machines?_
+
+The solution for the autocomplete problem that I implemented can be (at least, intuitively) scaled easily to many machines and many conversations. Since each branch in this prefix tree results in an independent subtree, at some fixed depth, every subtree can be stored on a unique machine. Then, the processing of disjoint queries can be parallelized. To prevent reprocessing of frequently used queries, we can cache the answers to FAQs using a similar data structure to the one used for the full model.
+
+The autocategorize problem can also be scaled similarly. We can store our map of keywords across multiple machines; we can then parallelize the processing of phrases, making one thread per phrase and computing the histograms for each phrase independently. Finally, we can add up each histogram and proceed as normal. 
