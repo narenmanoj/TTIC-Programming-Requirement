@@ -14,10 +14,11 @@ A query to the autocomplete engine thus boils down to a lookup of the prefix in 
 
 Files
 -----
+Here's all the files I used in my project.
 
-- autocomplete.py : contains an implementation of the prefix tree data structure and an autocomplete engine implementing a basic autocomplete interface.
-- autocomplete_server.py : contains an implementation of a very basic web server that accepts a query in the URL and returns JSON with the query results.
-- autocomplete_test.py : contains test cases for the prefix tree data structure, the correctness of which is crucial to the entire program and is the hardest to verify.  
+    - autocomplete.py : contains an implementation of the prefix tree data structure and an autocomplete engine implementing a basic autocomplete interface.
+    - autocomplete_server.py : contains an implementation of a very basic web server that accepts a query in the URL and returns JSON with the query results.
+    - autocomplete_test.py : contains test cases for the prefix tree data structure, the correctness of which is crucial to the entire program and is the hardest to verify.  
 
 Running
 -------
@@ -30,10 +31,10 @@ Follow-up questions
 
 Broadly, there are a few categories under which the autocomplete server should be evaluated. In no particular order:
 
-    - Speed of predictions. Measuring this is easy - sample from some realistic distribution of queries, hit the server with these queries, and measure the average response time.
-    - Quality of predictions. This is somewhat more subjective. One way to measure this is to have users rate the suggested completions; the server with the highest ratings wins. This is also useful if one wants to refine the ranking methodology. 
-    - Complexity of model updates. If the model never changes, then this is not an issue. However, if the corpus is growing or if certain phrases are used with decreasing frequency over time, then one may have to recreate the model periodically. This can become cumbersome as the update frequency increases and as the model becomes increasingly difficult to recreate or update. 
-    - Interpretability of the model. All else equal, one prefers a model whose predictions are easier to understand and explain. 
+    * Speed of predictions. Measuring this is easy - sample from some realistic distribution of queries, hit the server with these queries, and measure the average response time.
+    * Quality of predictions. This is somewhat more subjective. One way to measure this is to have users rate the suggested completions; the server with the highest ratings wins. This is also useful if one wants to refine the ranking methodology. 
+    * Complexity of model updates. If the model never changes, then this is not an issue. However, if the corpus is growing or if certain phrases are used with decreasing frequency over time, then one may have to recreate the model periodically. This can become cumbersome as the update frequency increases and as the model becomes increasingly difficult to recreate or update. 
+    * Interpretability of the model. All else equal, one prefers a model whose predictions are easier to understand and explain. 
 
 - _One way to improve the autocomplete server is to give topic-specific suggestions. How would you design an auto-categorization server? It should take a list of messages and return a TopicId. (Assume that every conversation in the training set has a TopicId)._
 
