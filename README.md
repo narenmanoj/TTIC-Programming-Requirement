@@ -24,15 +24,15 @@ Running
 -------
 To run all tests:
 
-    -python3 autocomplete_tests.py. 
+    python3 autocomplete_tests.py. 
 
 To start the web server:
 
-    -python3 autocomplete_server.py
+    python3 autocomplete_server.py
 
 To obtain text completions while the web server is running: 
 
-    -curl http://localhost:8080/autocomplete?q=< your_query_here > 
+    curl http://localhost:8080/autocomplete?q=< your_query_here > 
 
 
 Follow-up questions
