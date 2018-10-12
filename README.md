@@ -51,13 +51,15 @@ Broadly, there are a few categories under which the autocomplete server should b
 _One way to improve the autocomplete server is to give topic-specific suggestions. How would you design an auto-categorization server? It should take a list of messages and return a TopicId. (Assume that every conversation in the training set has a TopicId)._
 
 There are a couple ideas I have:
+
   - For each TopicID, construct a list of the most frequently used (nontrivial) words occurring in each discussion involving the TopicID. This can be done in some offline preprocessing step. Then, for each query, rank candidate TopicIDs by keyword presence in the query. Return the full sentences occurring in the topmost TopicIDs.
   -  
 
 _How would you evaluate if your auto-categorization server is good?_
 
 Similar to the first question, there are a few criteria to evaluate (unless stated otherwise, we can use the same methodology to evaluate the criterion as stated in the first question):
-    - Speed of predictions.
-    - Quality of predictions. This can be evaluated less subjectively than the autocomplete 
+
+- Speed of predictions.
+- Quality of predictions. This can be evaluated less subjectively than the autocomplete 
 
 _Processing hundreds of millions of conversations for your autocomplete and auto-categorize models could take a very long time. How could you distribute the processing across multiple machines?_
