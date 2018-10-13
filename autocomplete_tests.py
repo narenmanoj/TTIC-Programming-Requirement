@@ -15,6 +15,7 @@ def test_trie():
     assert "Hello World" in tt
     assert "Hello world" in tt
     assert "hello world - i'm not supposed to be in the trie" not in tt
+    assert "Hello World aaaaaaaaaaaaaa" not in tt
     tt.add("Hello World")
     assert len(tt) == 2
     assert "Hello World" in tt
@@ -46,23 +47,25 @@ def test_trie():
     util.save_object(tt, "test_autocomplete_state.pkl")
 
 
-def test_predictions():
-    # assuming you ran test_trie before
-    tt = util.load_object("test_autocomplete_state.pkl")
-    print("I have %d phrases saved now" % len(tt))
-    assert tt.__contains__("have", check_end=False)
-    print(tt.get_top_k_subphrases("when w"))
-
-
 def test_autocomplete():
-    ac = autocomplete.Autocomplete(
-        filename_pkl="autocomplete_state.pkl", load=True)
-    print(ac.generate_completions("this"))
+    ac = autocomplete.Autocomplete(load=True)
+
+    # let's just test that the phrases we get as output actually exist in the trie
+    results = ac.generate_completions("When w")
+    assert len(results) > 0
+    for r in results:
+        stupid_results = ac.generate_completions(r)
+        assert r in stupid_results
+
+    degenerate_results = ac.generate_completions("")
+    assert len(degenerate_results) == 0
+
+    degenerate_results = ac.generate_completions(
+        "asdkljf;alsdkjfa;lsdkjfdl;akjfakl;j")
+    assert len(degenerate_results) == 0
 
 
 if __name__ == "__main__":
-    # test_trie()
-    # test_predictions()
+    test_trie()
     test_autocomplete()
     print("trie tests passed!")
-    # print(AutocompleteModel("data/sample_conversations.json"))

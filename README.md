@@ -21,6 +21,7 @@ Here's all the files I used in my project.
     - autocomplete.py : contains an implementation of the prefix tree data structure and an autocomplete engine implementing a basic autocomplete interface.
     - autocomplete_server.py : contains an implementation of a very basic web server that accepts a query in the URL and returns JSON with the query results.
     - autocomplete_test.py : contains test cases for the prefix tree data structure, the correctness of which is crucial to the entire program and is the hardest to verify.  
+    - util.py : contains a few utility functions.
 
 Running
 -------
