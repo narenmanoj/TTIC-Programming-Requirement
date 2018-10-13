@@ -48,7 +48,7 @@ def test_trie():
 
 
 def test_autocomplete():
-    ac = autocomplete.Autocomplete(load=True)
+    ac = autocomplete.Autocomplete()
 
     # let's just test that the phrases we get as output actually exist in the trie
     results = ac.generate_completions("When w")
