@@ -1,6 +1,4 @@
-ASAPP NLP / ML Engineering Challenge
-====================================
-Here's my solution to the ASAPP Engineering Challenge. For the instructions, please see instructions.md.
+For the instructions, please see instructions.md.
 
 Solution Outline
 ----------------
